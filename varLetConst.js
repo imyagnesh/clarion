@@ -84,3 +84,27 @@
 // var            NO            Yes         Yes         Yes
 // const          Yes            No         No          No
 // let            Yes           No          Yes         No
+
+// Const so called exception
+
+const user = {
+  firstName: "Yagnesh",
+  lastName: "Modh",
+  age: 30,
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+};
+
+console.log(user.firstName);
+console.log(user.lastName);
+
+user.age = 33;
+
+console.log(user);
+
+const arr = [1, 2, 3, 4, 5];
+
+arr.pop();
+
+console.log(arr);
