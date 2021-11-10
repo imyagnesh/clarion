@@ -10,23 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./App.js":
-/*!****************!*\
-  !*** ./App.js ***!
-  \****************/
+/***/ "./src/App.js":
+/*!********************!*\
+  !*** ./src/App.js ***!
+  \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"app1\": () => (/* binding */ app1),\n/* harmony export */   \"app2\": () => (/* binding */ app2)\n/* harmony export */ });\nvar app1 = \"hello From App.js\";\nvar app2 = \"Hello app2\";\n\n//# sourceURL=webpack://clarion/./App.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"app1\": () => (/* binding */ app1),\n/* harmony export */   \"app2\": () => (/* binding */ app2)\n/* harmony export */ });\nvar app1 = \"hello From App.js\";\nvar app2 = \"Hello app2\";\n\n//# sourceURL=webpack://clarion/./src/App.js?");
 
 /***/ }),
 
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App */ \"./App.js\");\n\nvar a = 1;\nvar b = 2;\nconsole.log(a);\nconsole.log(b);\nconsole.log(_App__WEBPACK_IMPORTED_MODULE_0__.app1);\nconsole.log(_App__WEBPACK_IMPORTED_MODULE_0__.app2);\n\n//# sourceURL=webpack://clarion/./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App */ \"./src/App.js\");\n\nvar a = 1;\nvar b = 2;\nconsole.log(a);\nconsole.log(b);\nconsole.log(_App__WEBPACK_IMPORTED_MODULE_0__.app1);\nconsole.log(_App__WEBPACK_IMPORTED_MODULE_0__.app2);\n\n//# sourceURL=webpack://clarion/./src/index.js?");
 
 /***/ })
 
@@ -90,7 +90,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
 /******/ 	
 /******/ })()
 ;
