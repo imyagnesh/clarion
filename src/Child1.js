@@ -1,7 +1,7 @@
-import React, { memo } from "react";
+import React, { memo } from 'react';
 
 const Child1 = () => {
-  console.log("Child 1 Render");
+  console.log('Child 1 Render');
   return (
     <div>
       <h1>Child 1 Component</h1>

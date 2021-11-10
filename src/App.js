@@ -1,3 +1,9 @@
-export const app1 = "hello From App.js";
+import React, { Component } from 'react';
 
-export const app2 = "Hello app2";
+export default class App extends Component {
+  componentDidMount() {}
+
+  render() {
+    return <div>hello</div>;
+  }
+}

@@ -1,7 +1,9 @@
-import React, { Component, createRef } from "react";
-import ReactDOM from "react-dom";
-import Child1 from "./Child1";
-import Child2 from "./Child2";
+import React, { Component, createRef } from 'react';
+import PropTypes from 'prop-types';
+
+import ReactDOM from 'react-dom';
+import Child1 from './Child1';
+import Child2 from './Child2';
 
 // Function Component
 
@@ -73,7 +75,7 @@ class App extends Component {
 
   headingRef = createRef();
 
-  //Use cases of Constuctor
+  // Use cases of Constuctor
   // 1. Base on props derive new State value
   // 2. Analytics
   // 3. Bind methods
@@ -86,14 +88,14 @@ class App extends Component {
     // };
 
     // this.onIncrement = this.onIncrement.bind(this);
-    console.log("constructor");
+    console.log('constructor');
     // Make a api call for analytics
 
     // NEVER DERIVE STATE VALUE BASE ON API RESPONSE
   }
 
-  static getDerivedStateFromProps(props, state) {
-    console.log("getDerivedStateFromProps");
+  static getDerivedStateFromProps(props) {
+    console.log('getDerivedStateFromProps');
     return {
       greet: `Hello ${props.name}`,
     };
@@ -108,12 +110,12 @@ class App extends Component {
     // base on response set state
     // Register Events
 
-    document.addEventListener("copy", () => {
-      console.log("Copied");
+    document.addEventListener('copy', () => {
+      console.log('Copied');
     });
 
     // O(1)
-    this.headingRef.current.style = "color:red";
+    this.headingRef.current.style = 'color:red';
     // O(LogN)
     // document.getElementById("heading").style = "color:red";
     // O(N)
@@ -121,18 +123,18 @@ class App extends Component {
     // console.log();
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate');
+    return true;
+  }
+
+  getSnapshotBeforeUpdate() {
     return 1;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("snapshot", snapshot);
-    console.log("componentDidUpdate");
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("shouldComponentUpdate");
-    return true;
+    console.log('snapshot', snapshot);
+    console.log('componentDidUpdate');
   }
 
   static getDerivedStateFromError(error) {
@@ -156,8 +158,12 @@ class App extends Component {
   };
 
   render() {
-    console.log("App render");
-    if (this.state.error) {
+    console.log('App render');
+
+    const { greet, counter, error } = this.state;
+    const { title, caption } = this.props;
+
+    if (error) {
       return <h1>Error...</h1>;
     }
 
@@ -174,22 +180,28 @@ class App extends Component {
           id="heading"
           ref={this.headingRef}
         >
-          {this.props.title}
+          {title}
         </h1>
-        <h2>{this.props.caption}</h2>
-        <h3>{this.state.greet}</h3>
-        <h3>{this.state.counter}</h3>
+        <h2>{caption}</h2>
+        <h3>{greet}</h3>
+        <h3>{counter}</h3>
         <button type="button" onClick={this.onIncrement}>
           Increment Counter
         </button>
         <Child1 />
-        {this.state.counter === 1 && <Child2 />}
+        {counter === 1 && <Child2 />}
       </>
     );
   }
 }
 
+App.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired,
+};
+
 ReactDOM.render(
   <App name="Yagnesh" title="Hello from attribute" caption="hello caption" />,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

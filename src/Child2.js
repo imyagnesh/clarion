@@ -1,5 +1,5 @@
-import React, { Component, PureComponent } from "react";
-import shallowCompare from "react-addons-shallow-compare"; // ES6
+import React, { PureComponent } from 'react';
+// import shallowCompare from 'react-addons-shallow-compare'; // ES6
 
 export default class Child2 extends PureComponent {
   //   shouldComponentUpdate(nextProps, nextState) {
@@ -11,10 +11,6 @@ export default class Child2 extends PureComponent {
   //   }
   state = {
     counter: 0,
-  };
-
-  mouseMove = () => {
-    console.log("mouse move");
   };
 
   componentDidMount() {
@@ -29,29 +25,32 @@ export default class Child2 extends PureComponent {
     // clearInterval(this.interval);
   }
 
+  mouseMove = () => {
+    console.log('mouse move');
+  };
+
   incrementCounter = () => {
     // this.setState({
     //   counter: this.state.counter + 1,
     // });
     this.setState(
-      ({ counter }) => {
-        return {
-          counter: counter + 1,
-        };
-      },
+      ({ counter }) => ({
+        counter: counter + 1,
+      }),
       () => {
-        console.log(this.state.counter);
-      }
+        // console.log(this.state.counter);
+      },
     );
   };
 
   render() {
-    console.log("Child 2 Render");
-    if (this.state.counter > 5) throw new Error("something went wrong");
+    console.log('Child 2 Render');
+    const { counter } = this.state;
+    if (counter > 5) throw new Error('something went wrong');
     return (
       <div>
         <h1>Child 2 Component</h1>
-        {this.state.counter}
+        {counter}
         <button type="button" onClick={this.incrementCounter}>
           Increment Counter
         </button>
