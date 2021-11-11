@@ -1,0 +1,60 @@
+// Mounting
+
+// -> Constructor(call Only Once)
+// -> Use Cases
+// -> 1. Derive State Value base on Props
+// -> 2. Analytics
+// -> 3. Bind Methods(without Arrow methods)
+
+// -> getDerivedStateFromProps(calls everytime when state or prop value change)
+// -> Use Cases
+// -> 1. Update State value base on Props & Old State value
+
+// -> Render
+// -> Use Cases
+// -> 1. Mount HTML in DOM
+
+// -> ComponenentDidMount
+// -> Use Cases
+// -> 1. Update DOM
+// -> 2. On page Load -> Load DATA
+// -> 3. Register an Event
+
+// Updating
+
+// -> getDerivedStateFromProps(calls everytime when state or prop value change)
+// -> Use Cases
+// -> 1. Update State value base on Props & Old State value
+
+// -> ShouldComponentUpdate
+// -> Use Cases
+// -> 1. derive should component update or not.
+
+// -> Render
+// -> Use Cases
+// -> 1. Mount HTML in DOM
+
+// -> GetSnapShopBeforeUpdate
+// -> Use Case
+// -> 1. before update UI take a snapshop
+// -> What ever data you return that will goes to third parameter of ComponentDiDUpdate Life cycle methiod
+
+// -> ComponentDidUpdate
+// -> Use Case
+// -> 1. Update Dom base on new Changes
+
+// Unmount
+
+// -> ComponentWillUnmount
+// -> Use Case
+// -> Unbinnd events, timers, Iternavals, API
+
+// Error
+
+// -> GetDerivedStateFromError
+// -> Usecase
+// -> 1. derived new State base on error
+
+// -> ComponentDidCatch(error, info)
+// -> UseCase
+// -> 1. log the error(on Server)
