@@ -1,32 +1,81 @@
 import React, { Component, createRef } from 'react';
+
 import './todo.css';
+import TodoFilter from './todoFilter';
+import TodoForm from './todoForm';
+import TodoList from './todoList';
 
 export default class Todo extends Component {
   state = {
     todoList: [],
     filterType: 'all',
+    error: null,
+    loading: false,
   };
 
   todoTextRef = createRef();
 
-  handleAddTodo = event => {
-    event.preventDefault();
+  async componentDidMount() {
+    this.loadData();
+  }
 
-    this.setState(
-      ({ todoList }) => ({
-        todoList: [
-          ...todoList,
-          {
-            id: new Date().valueOf(),
-            text: this.todoTextRef.current.value,
-            isDone: false,
-          },
-        ],
-      }),
-      () => {
-        this.todoTextRef.current.value = '';
-      },
-    );
+  loadData = async () => {
+    try {
+      this.setState({
+        loading: true,
+      });
+      const res = await fetch('http://localhost:3000/todoList');
+      const json = await res.json();
+      this.setState({
+        todoList: json,
+        loading: false,
+      });
+    } catch (error) {
+      this.setState({
+        error,
+        loading: false,
+      });
+    }
+  };
+
+  handleAddTodo = async event => {
+    try {
+      event.preventDefault();
+
+      this.setState({
+        loading: true,
+      });
+      const res = await fetch('http://localhost:3000/todoList', {
+        method: 'POST',
+        body: JSON.stringify({
+          text: this.todoTextRef.current.value,
+          isDone: false,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      const json = await res.json();
+
+      this.setState(
+        ({ todoList }) => ({
+          filterType: 'all',
+          todoList: [...todoList, json],
+          loading: false,
+        }),
+        () => {
+          this.todoTextRef.current.value = '';
+          // this.handleFilterTodo('all');
+        },
+      );
+    } catch (error) {
+      this.setState({
+        error,
+        loading: false,
+      });
+    }
   };
 
   handleCompleteTodo = id => {
@@ -52,69 +101,46 @@ export default class Todo extends Component {
     });
   };
 
-  render() {
+  filteredTodo = () => {
     const { todoList, filterType } = this.state;
+    return todoList.filter(item => {
+      switch (filterType) {
+        case 'pending':
+          return !item.isDone;
+        case 'completed':
+          return item.isDone;
+        default:
+          return true;
+      }
+    });
+  };
+
+  render() {
+    const { filterType, error, loading } = this.state;
+
+    if (error) {
+      return <h1>{error.message}</h1>;
+    }
+
     return (
       <div className="container">
         <h1>Todo App</h1>
-        <form onSubmit={this.handleAddTodo}>
-          <input type="text" ref={this.todoTextRef} />
-          <button type="submit">Add Todo</button>
-        </form>
-
-        <div className="todo-list">
-          {todoList
-            .filter(item => {
-              switch (filterType) {
-                case 'pending':
-                  return !item.isDone;
-                case 'completed':
-                  return item.isDone;
-                default:
-                  return true;
-              }
-            })
-            .map(item => (
-              <div key={item.id} className="todo-item">
-                <input
-                  type="checkbox"
-                  checked={item.isDone}
-                  onChange={() => this.handleCompleteTodo(item.id)}
-                />
-                <span
-                  style={{
-                    textDecoration: item.isDone ? 'line-through' : 'none',
-                  }}
-                >
-                  {item.text}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => this.handleDeleteTodo(item.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-        </div>
-
-        <div className="todo-filter">
-          <button type="button" onClick={() => this.handleFilterTodo('all')}>
-            All
-          </button>
-          <button
-            type="button"
-            onClick={() => this.handleFilterTodo('pending')}
-          >
-            Pending
-          </button>
-          <button
-            type="button"
-            onClick={() => this.handleFilterTodo('completed')}
-          >
-            Completed
-          </button>
-        </div>
+        <TodoForm handleAddTodo={this.handleAddTodo} ref={this.todoTextRef} />
+        {loading ? (
+          <div className="todo-list">
+            <h1>Loading...</h1>
+          </div>
+        ) : (
+          <TodoList
+            todoList={this.filteredTodo()}
+            handleCompleteTodo={this.handleCompleteTodo}
+            handleDeleteTodo={this.handleDeleteTodo}
+          />
+        )}
+        <TodoFilter
+          filterType={filterType}
+          handleFilterTodo={this.handleFilterTodo}
+        />
       </div>
     );
   }

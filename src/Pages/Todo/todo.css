@@ -30,6 +30,12 @@
 }
 .todo-filter > button {
   flex: 1;
+  background-color: gray;
+  color: #fff;
+}
+
+.todo-filter > button.activeBtn {
+  background-color: red;
 }
 
 /* when flex direction is row then Justify-content willl work on X Axix */
