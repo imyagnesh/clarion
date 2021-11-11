@@ -9,6 +9,7 @@
 
 .todo-list {
   width: 100%;
+  flex: 1;
 }
 
 .todo-item {
@@ -21,6 +22,14 @@
 .todo-item > span {
   flex: 1;
   padding: 8px;
+}
+
+.todo-filter {
+  display: flex;
+  width: 100%;
+}
+.todo-filter > button {
+  flex: 1;
 }
 
 /* when flex direction is row then Justify-content willl work on X Axix */
