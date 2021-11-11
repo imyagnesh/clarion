@@ -9,42 +9,92 @@ export default class Todo extends Component {
   state = {
     todoList: [],
     filterType: 'all',
-    error: null,
-    loading: false,
+    status: [],
   };
 
   todoTextRef = createRef();
 
   async componentDidMount() {
-    this.loadData();
+    this.loadData('all');
   }
 
-  loadData = async () => {
+  loadingStatus = (processName, id = -1) => {
+    this.setState(({ status }) => {
+      const index = status.findIndex(
+        x => x.process === processName && x.id === id,
+      );
+      const data = {
+        process: processName,
+        status: 'loading',
+        id,
+      };
+      if (index === -1) {
+        return {
+          status: [...status, data],
+        };
+      }
+      return {
+        status: [...status.slice(0, index), data, ...status.slice(index + 1)],
+      };
+    });
+  };
+
+  successStatus = (processName, id = -1) => {
+    this.setState(({ status }) => ({
+      status: status.filter(
+        x =>
+          !(x.process === processName && x.status === 'loading' && x.id === id),
+      ),
+    }));
+  };
+
+  errorStatus = (processName, error, id = -1) => {
+    this.setState(({ status }) => {
+      const index = status.findIndex(
+        x => x.process === processName && x.status === 'loading' && x.id === id,
+      );
+      return {
+        status: [
+          ...status.slice(0, index),
+          {
+            ...status[index],
+            status: 'error',
+            error,
+          },
+          ...status.slice(index + 1),
+        ],
+      };
+    });
+  };
+
+  loadData = async filterType => {
+    const processName = 'load';
     try {
-      this.setState({
-        loading: true,
-      });
-      const res = await fetch('http://localhost:3000/todoList');
+      this.loadingStatus(processName);
+
+      let query = '';
+
+      if (filterType !== 'all') {
+        query = `?isDone=${filterType === 'completed'}`;
+      }
+
+      const res = await fetch(`http://localhost:3000/todoList${query}`);
       const json = await res.json();
       this.setState({
+        filterType,
         todoList: json,
-        loading: false,
       });
+      this.successStatus(processName);
     } catch (error) {
-      this.setState({
-        error,
-        loading: false,
-      });
+      this.errorStatus(processName, error);
     }
   };
 
   handleAddTodo = async event => {
+    const processName = 'add';
     try {
       event.preventDefault();
-
-      this.setState({
-        loading: true,
-      });
+      this.loadingStatus(processName);
       const res = await fetch('http://localhost:3000/todoList', {
         method: 'POST',
         body: JSON.stringify({
@@ -61,86 +111,98 @@ export default class Todo extends Component {
 
       this.setState(
         ({ todoList }) => ({
-          filterType: 'all',
           todoList: [...todoList, json],
-          loading: false,
         }),
         () => {
           this.todoTextRef.current.value = '';
-          // this.handleFilterTodo('all');
+          this.loadData('all');
         },
       );
+      this.successStatus(processName);
     } catch (error) {
-      this.setState({
-        error,
-        loading: false,
-      });
+      this.errorStatus(processName, error);
     }
   };
 
-  handleCompleteTodo = id => {
-    this.setState(({ todoList }) => ({
-      todoList: todoList.map(item => {
-        if (item.id === id) {
-          return { ...item, isDone: !item.isDone };
-        }
-        return item;
-      }),
-    }));
+  handleCompleteTodo = async item => {
+    const processName = 'update';
+    try {
+      this.loadingStatus(processName, item.id);
+      const res = await fetch(`http://localhost:3000/todoList/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ ...item, isDone: !item.isDone }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      const json = await res.json();
+
+      this.setState(({ todoList }) => {
+        const index = todoList.findIndex(x => x.id === json.id);
+
+        return {
+          todoList: [
+            ...todoList.slice(0, index),
+            json,
+            ...todoList.slice(index + 1),
+          ],
+        };
+      });
+      this.successStatus(processName, item.id);
+    } catch (error) {
+      this.errorStatus(processName, error, item.id);
+    }
   };
 
-  handleDeleteTodo = id => {
-    this.setState(({ todoList }) => ({
-      todoList: todoList.filter(item => item.id !== id),
-    }));
-  };
+  handleDeleteTodo = async id => {
+    const processName = 'delete';
+    try {
+      this.loadingStatus(processName, id);
+      await fetch(`http://localhost:3000/todoList/${id}`, {
+        method: 'DELETE',
+      });
 
-  handleFilterTodo = filterType => {
-    this.setState({
-      filterType,
-    });
-  };
+      this.setState(({ todoList }) => {
+        const index = todoList.findIndex(x => x.id === id);
 
-  filteredTodo = () => {
-    const { todoList, filterType } = this.state;
-    return todoList.filter(item => {
-      switch (filterType) {
-        case 'pending':
-          return !item.isDone;
-        case 'completed':
-          return item.isDone;
-        default:
-          return true;
-      }
-    });
+        return {
+          todoList: [...todoList.slice(0, index), ...todoList.slice(index + 1)],
+        };
+      });
+      this.successStatus(processName, id);
+    } catch (error) {
+      this.errorStatus(processName, error, id);
+    }
   };
 
   render() {
-    const { filterType, error, loading } = this.state;
+    const { filterType, status, todoList } = this.state;
 
-    if (error) {
-      return <h1>{error.message}</h1>;
+    if (status.some(x => x.process === 'load' && x.status === 'loading')) {
+      return <h1>Loading...</h1>;
+    }
+
+    if (status.some(x => x.process === 'load' && x.status === 'error')) {
+      return <h1>Something Went wrong</h1>;
     }
 
     return (
       <div className="container">
         <h1>Todo App</h1>
-        <TodoForm handleAddTodo={this.handleAddTodo} ref={this.todoTextRef} />
-        {loading ? (
-          <div className="todo-list">
-            <h1>Loading...</h1>
-          </div>
-        ) : (
-          <TodoList
-            todoList={this.filteredTodo()}
-            handleCompleteTodo={this.handleCompleteTodo}
-            handleDeleteTodo={this.handleDeleteTodo}
-          />
-        )}
-        <TodoFilter
-          filterType={filterType}
-          handleFilterTodo={this.handleFilterTodo}
+        <TodoForm
+          handleAddTodo={this.handleAddTodo}
+          status={status}
+          ref={this.todoTextRef}
         />
+        <TodoList
+          todoList={todoList}
+          status={status}
+          handleCompleteTodo={this.handleCompleteTodo}
+          handleDeleteTodo={this.handleDeleteTodo}
+        />
+        <TodoFilter filterType={filterType} handleFilterTodo={this.loadData} />
       </div>
     );
   }

@@ -1,7 +1,12 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const TodoList = ({ todoList, handleCompleteTodo, handleDeleteTodo }) => {
+const TodoList = ({
+  todoList,
+  handleCompleteTodo,
+  handleDeleteTodo,
+  status,
+}) => {
   console.log('TodoList render');
   return (
     <div className="todo-list">
@@ -9,8 +14,14 @@ const TodoList = ({ todoList, handleCompleteTodo, handleDeleteTodo }) => {
         <div key={item.id} className="todo-item">
           <input
             type="checkbox"
+            disabled={status.some(
+              x =>
+                x.process === 'update' &&
+                x.status === 'loading' &&
+                x.id === item.id,
+            )}
             checked={item.isDone}
-            onChange={() => handleCompleteTodo(item.id)}
+            onChange={() => handleCompleteTodo(item)}
           />
           <span
             style={{
@@ -19,7 +30,16 @@ const TodoList = ({ todoList, handleCompleteTodo, handleDeleteTodo }) => {
           >
             {item.text}
           </span>
-          <button type="button" onClick={() => handleDeleteTodo(item.id)}>
+          <button
+            type="button"
+            disabled={status.some(
+              x =>
+                x.process === 'delete' &&
+                x.status === 'loading' &&
+                x.id === item.id,
+            )}
+            onClick={() => handleDeleteTodo(item.id)}
+          >
             Delete
           </button>
         </div>
@@ -36,6 +56,13 @@ TodoList.propTypes = {
       isDone: PropTypes.bool.isRequired,
       id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  status: PropTypes.arrayOf(
+    PropTypes.shape({
+      process: PropTypes.string,
+      status: PropTypes.string,
+      id: PropTypes.number,
     }),
   ).isRequired,
 };
