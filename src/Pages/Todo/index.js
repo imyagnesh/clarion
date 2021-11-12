@@ -88,9 +88,73 @@ const Todo = ({ tl = [] }) => {
     }
   };
 
-  const handleCompleteTodo = () => {};
+  const handleCompleteTodo = async item => {
+    // const processName = 'update';
+    // const { loadingStatus, successStatus, errorStatus } = this.props;
+    try {
+      // loadingStatus(processName, item.id);
+      const res = await fetch(`http://localhost:3000/todoList/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ ...item, isDone: !item.isDone }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
 
-  const handleDeleteTodo = () => {};
+      const json = await res.json();
+
+      setTodoList(val => {
+        const index = val.findIndex(x => x.id === json.id);
+
+        return [...val.slice(0, index),
+                json,
+                ...val.slice(index + 1)];
+      });
+      // this.setState(({ todoList }) => {
+      //   const index = todoList.findIndex(x => x.id === json.id);
+
+      //   return {
+      //     todoList: [
+      //       ...todoList.slice(0, index),
+      //       json,
+      //       ...todoList.slice(index + 1),
+      //     ],
+      //   };
+      // });
+      // successStatus(processName, item.id);
+    } catch (error) {
+      // errorStatus(processName, error, item.id);
+    }
+  };
+
+  const handleDeleteTodo = async id => {
+    // const processName = 'delete';
+    // const { loadingStatus, successStatus, errorStatus } = this.props;
+    try {
+      // loadingStatus(processName, id);
+      await fetch(`http://localhost:3000/todoList/${id}`, {
+        method: 'DELETE',
+      });
+
+      setTodoList(val => {
+        const index = val.findIndex(x => x.id === id);
+
+        return [...val.slice(0, index), ...val.slice(index + 1)];
+      });
+
+      // this.setState(({ todoList }) => {
+      //   const index = todoList.findIndex(x => x.id === id);
+
+      //   return {
+      //     todoList: [...todoList.slice(0, index), ...todoList.slice(index + 1)],
+      //   };
+      // });
+      // successStatus(processName, id);
+    } catch (error) {
+      // errorStatus(processName, error, id);
+    }
+  };
 
   return (
     <div className="container">
