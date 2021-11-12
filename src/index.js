@@ -5,75 +5,75 @@ import './root.css';
 
 ReactDOM.render(<Todo />, document.getElementById('root'));
 
-// import React, { Component, createRef } from 'react';
+// import React, { Component, createRef, useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 
 // import ReactDOM from 'react-dom';
 // import Child1 from './Child1';
 // import Child2 from './Child2';
 
-// // Function Component
+// Function Component
 
-// // Rules
+// Rules
 
-// // 1. Cant return multiple element from one component
-// // 2. component name shuld start with capital letter
-// // 3. style provide as in object & property name should be in camel case
-// // 4. use className instead of class
+// 1. Cant return multiple element from one component
+// 2. component name shuld start with capital letter
+// 3. style provide as in object & property name should be in camel case
+// 4. use className instead of class
 
-// // Stateless component
+// Stateless component
 
-// // const App = ({ title, caption }) => {
-// //   return (
-// //     <>
-// //       <h1
-// //         className="heading"
-// //         style={
-// //           {
-// //             //   color: "green",
-// //             //   backgroundColor: "yellow",
-// //           }
-// //         }
-// //         id="heading"
-// //       >
-// //         {title}
-// //       </h1>
-// //       <h2>{caption}</h2>
-// //       <input type="text" />
-// //       <input type="checkbox" />
-// //     </>
-// //   );
-// // };
+// const App = ({ title, caption }) => {
+//   return (
+//     <>
+//       <h1
+//         className="heading"
+//         style={
+//           {
+//             //   color: "green",
+//             //   backgroundColor: "yellow",
+//           }
+//         }
+//         id="heading"
+//       >
+//         {title}
+//       </h1>
+//       <h2>{caption}</h2>
+//       <input type="text" />
+//       <input type="checkbox" />
+//     </>
+//   );
+// };
 
-// // let counter = 1;
+// let counter = 1;
 
-// // stateful component
-// // 1. component will upate only when you change state using setState or if you pass new prop value
-// // 2. forceUpdate(Never USE)
+// stateful component
+// 1. component will upate only when you change state using setState or if you pass new prop value
+// 2. forceUpdate(Never USE)
 
-// // Life Cycle method
+// Life Cycle method
 
-// // Stages of Life Cyle methods
+// Stages of Life Cyle methods
 
-// // 1. Mounting
-// // -> 1. Constructor(call only once)
-// // -> 2. getDerivedStateFromProps
-// // -> 3. render
-// // -> 4. componentDidMount(call only once)
+// 1. Mounting
+// -> 1. Constructor(call only once)
+// -> 2. getDerivedStateFromProps
+// -> 3. render
+// -> 4. componentDidMount(call only once)
 
-// // 2. Updating
-// // -> 1. getDerivedStateFromProps
-// // -> 2. shouldComponentUpdate
-// // -> 3. render
-// // -> 4. getSnapshotBeforeUpdate
-// // -> 5. componentDidUpdate
+// 2. Updating
+// -> 1. getDerivedStateFromProps
+// -> 2. shouldComponentUpdate
+// -> 3. render
+// -> 4. getSnapshotBeforeUpdate -> Cant Achieve in Hooks
+// -> 5. componentDidUpdate
 
-// // 3. Unmount
-// // -> componentWillUnmount
+// 3. Unmount
+// -> componentWillUnmount
 
-// // 4. Error
-// // -> 1. getDerivedStateFromError
-// // -> 2. componentDidCatch
+// 4. Error -> Cant Achieve in Hooks
+// -> 1. getDerivedStateFromError
+// -> 2. componentDidCatch
 
 // class App extends Component {
 //   state = {
@@ -201,6 +201,47 @@ ReactDOM.render(<Todo />, document.getElementById('root'));
 //     );
 //   }
 // }
+
+// const App = ({ name, title, caption }) => {
+//   const [counter, setCounter] = useState(0);
+//   const [i, setI] = useState(0);
+//   const [greet, setGreet] = useState(`Hello, ${name}`);
+//   console.log('render');
+
+//   // ComponentDidMount
+//   useEffect(() => {
+//     console.log('with empty Array');
+//   }, []);
+
+//   useEffect(() => {
+//     console.log('added counter in Array');
+//   }, [counter, name]);
+
+//   // ComponentDidMount
+//   // ComponentDidUpdate
+//   // ComponentWillUnmout
+//   useEffect(() => {
+//     console.log('Without Second Parameter');
+//   });
+
+//   return (
+//     <div>
+//       <h1 id="heading">Hello from App</h1>
+//       <h2>{counter}</h2>
+//       <h3>{greet}</h3>
+//       <button type="button" onClick={() => setCounter(val => val + 1)}>
+//         Increment Counter
+//       </button>
+
+//       <h2>{i}</h2>
+//       <button type="button" onClick={() => setI(val => val + 1)}>
+//         Increment I
+//       </button>
+//       <Child1 />
+//       {i < 5 && <Child2 />}
+//     </div>
+//   );
+// };
 
 // App.propTypes = {
 //   name: PropTypes.string.isRequired,
