@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import LocaleProvider from './context/localeContext';
 import './root.css';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <LocaleProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </LocaleProvider>,
   document.getElementById('root'),
 );
