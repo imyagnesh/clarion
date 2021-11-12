@@ -6,28 +6,8 @@
       "id": 1
     },
     {
-      "text": "learn react",
-      "isDone": false,
-      "id": 2
-    },
-    {
-      "text": "asdfadsf",
-      "isDone": true,
-      "id": 7
-    },
-    {
-      "text": "assdfads",
-      "isDone": false,
-      "id": 8
-    },
-    {
-      "text": "test loading",
-      "isDone": false,
-      "id": 9
-    },
-    {
       "text": "hello",
-      "isDone": false,
+      "isDone": true,
       "id": 10
     },
     {
@@ -36,19 +16,14 @@
       "id": 11
     },
     {
-      "text": "zdf.lkadskljf",
-      "isDone": false,
-      "id": 12
-    },
-    {
-      "text": "asdflkasjdf",
-      "isDone": false,
-      "id": 13
-    },
-    {
       "text": "asdflkasjd",
       "isDone": false,
       "id": 14
+    },
+    {
+      "text": "asdfasdf",
+      "isDone": false,
+      "id": 15
     }
   ],
   "wetherDetails": [
