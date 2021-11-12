@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class App extends Component {
-  componentDidMount() {}
+const App = () => <div>hello from app</div>;
 
-  render() {
-    return <div>hello</div>;
-  }
-}
+export default App;

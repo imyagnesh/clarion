@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Todo from './Pages/Todo';
+import App from './App';
 import './root.css';
 
-ReactDOM.render(<Todo />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // import React, { Component, createRef, useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
