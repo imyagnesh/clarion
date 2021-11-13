@@ -5,33 +5,33 @@ import { registerationFields, registerInitialValues } from './registerationField
 import Form from '../../components/Form';
 
 const Register = () => {
-
   const navigate = useNavigate();
 
   return (
-  <>
-    <h1>Registration</h1>
-    <Form
-      fields={registerationFields}
-      initialValues={registerInitialValues}
-      btnText="Login"
-      onSubmit={val => {
-        console.log(val);
-      }}
-    />
+    <>
+      <h1>Registration</h1>
+      <Form
+        fields={registerationFields}
+        initialValues={registerInitialValues}
+        btnText="Login"
+        onSubmit={val => {
+          console.log(val);
+        }}
+      />
 
-    <Typography variant="body1" gutterBottom>
-      Don't Have an Account Please{' '}
-      <Typography
-        onClick={() => navigate('/')}
-        variant="button"
-        component="span"
-      >
-        Login
+      <Typography variant="body1" gutterBottom>
+        Don't Have an Account Please
+        {' '}
+        <Typography
+          onClick={() => navigate('register', { replace: true })}
+          variant="button"
+          component="span"
+        >
+          Login
+        </Typography>
       </Typography>
-    </Typography>
-  </>
+    </>
   );
-}
+};
 
 export default Register;
