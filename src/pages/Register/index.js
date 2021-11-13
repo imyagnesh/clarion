@@ -1,47 +1,37 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-import './register.css';
+import { Typography } from '@mui/material';
+import { registerationFields, registerInitialValues } from './registerationFields';
 import Form from '../../components/Form';
-import { registerFields, registerInitialValues } from './registerFields';
-import { AuthContext } from '../../context/authContext';
-// import { LocaleContext } from '../../context/localeContext';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { register } = useContext(AuthContext);
-  //   const { locale, setLocale } = useContext(LocaleContext);
 
-  console.log('hello');
+  const navigate = useNavigate();
 
   return (
-    <>
-      <h1>Register</h1>
-      <Form
-        validate={values => {
-          const errors = {};
-          if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = 'confirm password should match password';
-          }
-          return errors;
-        }}
-        fields={registerFields}
-        initialValues={registerInitialValues}
-        btnText="Register"
-        onSubmit={register}
-      />
-      <Typography variant="body1" gutterBottom>
-        Go to Login{' '}
-        <Typography
-          onClick={() => navigate('/', { replace: true })}
-          variant="button"
-          component="span"
-        >
-          Login
-        </Typography>
+  <>
+    <h1>Registration</h1>
+    <Form
+      fields={registerationFields}
+      initialValues={registerInitialValues}
+      btnText="Login"
+      onSubmit={val => {
+        console.log(val);
+      }}
+    />
+
+    <Typography variant="body1" gutterBottom>
+      Don't Have an Account Please{' '}
+      <Typography
+        onClick={() => navigate('/')}
+        variant="button"
+        component="span"
+      >
+        Login
       </Typography>
-    </>
+    </Typography>
+  </>
   );
-};
+}
 
 export default Register;
