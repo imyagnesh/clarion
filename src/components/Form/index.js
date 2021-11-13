@@ -4,7 +4,7 @@ import React from 'react';
 
 const Form = ({ fields, btnText, ...rest }) => (
   <Formik {...rest}>
-    {({ handleSubmit }) => (
+    {({ handleSubmit, errors }) => (
       <form
         onSubmit={handleSubmit}
         style={{
@@ -12,6 +12,8 @@ const Form = ({ fields, btnText, ...rest }) => (
           flexDirection: 'column',
         }}
       >
+        {!!errors.serverError && <h3>{errors.serverError}</h3>}
+
         {fields.map(x => (
           <Field key={x.name} {...x} />
         ))}

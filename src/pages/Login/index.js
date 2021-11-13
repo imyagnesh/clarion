@@ -1,18 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './login.css';
-import FormikInput from '../../components/FormikInput';
 import Form from '../../components/Form';
 import { loginFields, loginInitialValues } from './loginFields';
+import { AuthContext } from '../../context/authContext';
 // import { LocaleContext } from '../../context/localeContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  //   const { locale, setLocale } = useContext(LocaleContext);
-
-  console.log('hello');
+  const { login } = useContext(AuthContext);
 
   return (
     <>
@@ -21,14 +18,12 @@ const Login = () => {
         fields={loginFields}
         initialValues={loginInitialValues}
         btnText="Login"
-        onSubmit={val => {
-          console.log(val);
-        }}
+        onSubmit={login}
       />
       <Typography variant="body1" gutterBottom>
         Don't Have an Account Please{' '}
         <Typography
-          onClick={() => navigate('register')}
+          onClick={() => navigate('register', { replace: true })}
           variant="button"
           component="span"
         >

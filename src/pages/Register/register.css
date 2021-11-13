@@ -1,0 +1,10 @@
+.register-container h1 {
+  text-align: center;
+}
+.register-container .MuiFormControl-root {
+  margin: 10px 0;
+}
+
+.register-container .MuiButton-root {
+  margin: 10px 0;
+}
