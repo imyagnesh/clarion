@@ -31,6 +31,13 @@ const MainLayout = ({ totalItems }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Shopping Cart
           </Typography>
+
+          <Button color="inherit" onClick={() => {
+            navigate('home/product');
+          }}>
+            ADD PRODUCTS
+          </Button>
+
           <IconButton
             onClick={() => {
               navigate('home/cart');
@@ -43,6 +50,7 @@ const MainLayout = ({ totalItems }) => {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
+          
           <Button color="inherit" onClick={logout}>
             Logout
           </Button>

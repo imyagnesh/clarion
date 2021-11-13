@@ -7,6 +7,7 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Products from './pages/Products';
 
 const AuthWrapper = ({ children }) => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -47,6 +48,7 @@ const App = () => (
       >
         <Route path="/home" element={<Home />} />
         <Route path="home/cart" element={<Cart />} />
+        <Route path="home/product" element={<Products />} />
       </Route>
     </Routes>
   </AuthProvider>
