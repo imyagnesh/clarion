@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AuthLayout from './components/AuthLayout';
 import MainLayout from './components/MainLayout';
 import AuthProvider, { AuthContext } from './context/authContext';
+import AddProduct from './pages/AddProduct';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -47,6 +48,7 @@ const App = () => (
       >
         <Route path="/home" element={<Home />} />
         <Route path="home/cart" element={<Cart />} />
+        <Route path="home/addProduct" element={<AddProduct />} />
       </Route>
     </Routes>
   </AuthProvider>

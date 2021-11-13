@@ -43,6 +43,14 @@ const MainLayout = ({ totalItems }) => {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
+          <Button
+            color="inherit"
+            onClick={() => {
+              navigate('home/addProduct');
+            }}
+          >
+            Add Product
+          </Button>
           <Button color="inherit" onClick={logout}>
             Logout
           </Button>
