@@ -1,17 +1,17 @@
 import FormikInput from '../../components/FormikInput';
 
 export const registerationFields = [
-    {
-        name: 'name',
-        label: 'Name',
-        component: FormikInput,
-        validate: value => {
-          if (!value) {
-            return 'Required...';
-          }
-          return '';
-        },
-      },
+  {
+    name: 'name',
+    label: 'Name',
+    component: FormikInput,
+    validate: value => {
+      if (!value) {
+        return 'Required...';
+      }
+      return '';
+    },
+  },
   {
     name: 'email',
     label: 'Email Address',
@@ -52,5 +52,6 @@ export const registerationFields = [
 export const registerInitialValues = {
   email: '',
   password: '',
-  name: ''
+  name: '',
+  confirmpassword: '',
 };

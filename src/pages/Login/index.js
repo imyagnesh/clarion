@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './login.css';
-import FormikInput from '../../components/FormikInput';
 import Form from '../../components/Form';
 import { loginFields, loginInitialValues } from './loginFields';
 // import { LocaleContext } from '../../context/localeContext';
